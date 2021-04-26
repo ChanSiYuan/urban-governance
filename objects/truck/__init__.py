@@ -1,0 +1,1 @@
+from .truck import get_prediction_truck
