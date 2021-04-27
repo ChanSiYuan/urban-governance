@@ -1,0 +1,1 @@
+from .trash import get_prediction_trash
