@@ -1,0 +1,1 @@
+from .flotage import get_prediction_flotage

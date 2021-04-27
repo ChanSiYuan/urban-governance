@@ -91,4 +91,27 @@ def predict():
                         'neat': _neat})
 
 
+@app.route('/predict_smpfw', methods=['POST'])
+def predict_smpfw():
+    """
+    The api for flotages detection that flowing on the river.
+    Dtection object contain: flotage
+    :return:
+    """
+    if request.method == 'POST':
+        time_start = time.time()
+        file = request.files['file']
+        img_bytes = file.read()
+        preds = get_prediction_flotage(image_bytes=img_bytes)
+        _cls, _x0, _y0, _x1, _y1, = preds
+        time_end = time.time()
+        curr_time = time.strftime(time_fmt, time.localtime())
+        print(f"[{curr_time}] inference [smpfw] time cost: {time_end - time_start:2f} s")
+        return jsonify({
+            'cls': _cls,
+            'x0': _x0,
+            'y0': _y0,
+            'x1': _x1,
+            'y1': _y1
+        })
 
