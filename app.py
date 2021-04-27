@@ -3,13 +3,14 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from flask import Flask, jsonify, request
+from waitress import serve
 
 from objects.can.ctrashc import get_prediction_ctrashc
 from objects.can.strashc import get_prediction_strashc
 from objects.trash import get_prediction_trash
 from objects.truck import get_prediction_truck
 from objects.flotage import get_prediction_flotage
-from objects.blot import get_prediction_blot
+# from objects.blot import get_prediction_blot
 
 
 app = Flask(__name__)
@@ -139,3 +140,7 @@ def predict_trash():
             'x1': _x1,
             'y1': _y1
         })
+
+
+if __name__ == "__main__":
+    serve(app, host="0.0.0.0", port=18080)
