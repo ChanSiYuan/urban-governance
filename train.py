@@ -26,13 +26,13 @@ from detectron2.evaluation import COCOEvaluator, inference_on_dataset, DatasetEv
 # }
 
 label_zoo = dict({
-    "ctrashc": dict({
+    "strashc": dict({
         "fixed": 0,
         "mobile": 1,
         "bag": 2
     }),
-    "strashc": dict({
-        "fixed": 0,
+    "ctrashc": dict({
+        "mobile": 0,
         "bag": 1
     }),
     "trash": dict({
