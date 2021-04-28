@@ -55,11 +55,13 @@ def get_parser():
     parser = argparse.ArgumentParser(description="Detectron2 demo for builtin configs")
 
     # Basic setting
-    parser.add_argument('--task', default="default", help="Choose the label for current task [ctrashc, strashc, "
+    parser.add_argument('-t', '--task', default="", help="Choose the label for current task [ctrashc, strashc, "
                                                           "truck, trash, flotage, blot]")
-    parser.add_argument('--result_output', default="/home/csy/research/cs_zz/can/ctrashc", help='Set the result store folder')
-    parser.add_argument('--data_dir', default='/home/csy/data/cs_zz/can/ctrashc', help='Set the data folder path')
-    parser.add_argument('--gpuid', default='2', help='Set the available gpu')
+    parser.add_argument('-o', '--result_output', default="/home/csy/research/cs_zz/can/ctrashc", help='Set the result '
+                                                                                                 'store folder')
+    parser.add_argument('-d', '--data_dir', default='/home/csy/data/cs_zz/can/ctrashc', help='Set the data folder '
+                                                                                              'path')
+    parser.add_argument('-g', '--gpuid', default='2', help='Set the available gpu')
 
     return parser
 
@@ -141,7 +143,7 @@ def setup_cfg(args):
     cfg.SOLVER.BASE_LR = 0.00025
     cfg.SOLVER.MAX_ITER = 4000
     cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512
-    cfg.MODEL.ROI_HEADS.NUM_CLASSES = len(model_zoo[args.task])
+    cfg.MODEL.ROI_HEADS.NUM_CLASSES = len(label_zoo[args.task])
     cfg.OUTPUT_DIR = args.result_output
     cfg.DATALOADER.FILTER_EMPTY_ANNOTATIONS = False
     cfg.freeze()
