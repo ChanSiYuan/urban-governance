@@ -1,0 +1,1 @@
+from .blot import get_prediction_blot
