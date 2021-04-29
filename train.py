@@ -46,7 +46,7 @@ label_zoo = dict({
 
     }),
     "blot": dict({
-
+        "blot": 0
     })
 })
 
@@ -61,7 +61,7 @@ def get_parser():
                                                                                                  'store folder')
     parser.add_argument('-d', '--data_dir', default='/home/csy/data/cs_zz/can/ctrashc', help='Set the data folder '
                                                                                               'path')
-    parser.add_argument('-g', '--gpuid', default='2', help='Set the available gpu')
+    parser.add_argument('-g', '--gpuid', default='1', help='Set the available gpu')
 
     return parser
 

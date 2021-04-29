@@ -5,8 +5,6 @@ import sys
 import xml.etree.ElementTree as ElementTree
 import argparse
 
-sys.path.extend(['..', '../..'])
-
 from detectron2.data import DatasetCatalog, MetadataCatalog
 from detectron2.structures import BoxMode
 from detectron2.engine import DefaultTrainer
@@ -42,7 +40,7 @@ label_zoo = dict({
 
     }),
     "blot": dict({
-
+        "blot": 0
     })
 })
 
@@ -55,6 +53,13 @@ def get_parser():
     # Basic setting
     parser.add_argument('-t', '--task', default="", help="Choose the label for current task [ctrashc, strashc, "
                                                          "truck, trash, flotage, blot]")
+    parser.add_argument('-g', '--gpuid', default="1", help="Set the GPU ID")
+    parser.add_argument('-d', '--datadir', default="", help="Set the label data path")
+    parser.add_argument('-i', '--testImgPath', default="/home/csy/data/cszz/test/test_data", help="set the test "
+                                                                                                  "images folder path")
+    parser.add_argument('-o', '--testResultPath', default="/home/csy/data/cszz/test/test_result", help="set the test "
+                                                                                                       "result folder path")
+    parser.add_argument('-m', '--modelWeightPath', default="", help="set the inference model weight path")
 
     return parser
 
@@ -122,15 +127,16 @@ def get_dicts(data_dir, mode='train'):
 
 
 class Gen_Annotation:
-    def __init__(self, filename):
+    def __init__(self, filename, task):
         self.root = etree.Element("annotation")
         file = etree.SubElement(self.root, "filename")
         file.text = filename
+        self.task = task
 
     def set_size(self, width, height, channel):
         source = etree.SubElement(self.root, "source")
         database = etree.SubElement(source, "database")
-        database.text = "ctrashc"
+        database.text = self.task
 
         size = etree.SubElement(self.root, "size")
         widthn = etree.SubElement(size, "width")
@@ -168,22 +174,20 @@ class Gen_Annotation:
 
 if __name__ == "__main__":
 
-    args = get_parser()
-    img_path = r"/home/csy/data/cszz/test/test_data"
+    args = get_parser().parse_args()
 
-    # choose the output folder
-    output_path = r"/home/csy/data/cszz/test/test_result"
+    img_path = args.testImgPath
+    output_path = args.testResultPath
 
     os.makedirs(output_path, exist_ok=True)
     os.makedirs(osp.join(output_path, "images"), exist_ok=True)
     os.makedirs(osp.join(output_path, "xmls"), exist_ok=True)
     os.makedirs(osp.join(output_path, "images_with_labels"), exist_ok=True)
 
-    # choose the cuda number
-    os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+    os.environ['CUDA_VISIBLE_DEVICES'] = args.gpuid
 
     for mode in ['train', 'val']:
-        DatasetCatalog.register('cur_' + mode, lambda mode=mode: get_dicts(data_dir, mode))
+        DatasetCatalog.register('cur_' + mode, lambda mode=mode: get_dicts(args.datadir, mode))
         MetadataCatalog.get('cur_' + mode).set(thing_classes=list(label_zoo[args.task].keys()))
 
     cfg = get_cfg()
@@ -193,16 +197,14 @@ if __name__ == "__main__":
     cfg.DATASETS.TEST = ("cur_val",)
     cfg.DATALOADER.NUM_WORKERS = 2
 
-    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7  # set threshold for this model
+    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7
     cfg.SOLVER.IMS_PER_BATCH = 6
-    cfg.SOLVER.BASE_LR = 0.00025  # pick a good LR
-    cfg.SOLVER.MAX_ITER = 3000  # 300 iterations seems good enough for this toy dataset; you may need to train longer for a practical dataset
-    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512  # faster, and good enough for this toy dataset (default: 512)
+    cfg.SOLVER.BASE_LR = 0.00025
+    cfg.SOLVER.MAX_ITER = 3000
+    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = len(label_zoo[args.task])
 
-    # choose the model weight
-    # cfg.MODEL.WEIGHTS = os.path.join("/data/csy/cs_zz/final_models", "model_final_ctrashcan.pth")
-    cfg.MODEL.WEIGHTS = osp.join("/home/csy/project/cszz/checkpoints/weights", "ctrashc_v20.pth")
+    cfg.MODEL.WEIGHTS = args.modelWeightPath
 
     predictor = DefaultPredictor(cfg)
 
@@ -237,7 +239,7 @@ if __name__ == "__main__":
         scores = output._fields["scores"].tolist()
         classes = output._fields["pred_classes"].tolist()
 
-        anno = Gen_Annotation(osp.join(output_path, "images", img_name.split(".")[0]))
+        anno = Gen_Annotation(osp.join(output_path, "images", img_name.split(".")[0]), args.task)
         anno.set_size(w, h, c)
 
         label_keys = list(label_zoo[args.task].keys())
