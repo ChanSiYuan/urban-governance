@@ -10,8 +10,8 @@ from utils.predictor import VisualizationDemo
 setup_logger()
 
 important_params = dict({
-    "model_weight": "model_final.pth",
-    "score_thresh": 0.7,
+    "model_weight": "blot_v1.pth",
+    "score_thresh": 0.4,
     "device_GPUid": "cuda:0",
     "max_size": 512,
     "min_size": 32

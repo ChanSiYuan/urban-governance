@@ -12,8 +12,8 @@ setup_logger()
 cfg = get_cfg()
 cfg.merge_from_file("./configs/COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml")
 cfg.MODEL.WEIGHTS = os.path.join("/home/disk/checkpoints", "model_final_smpfw_v2.pth")
-cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.8  # set the testing threshold for this model
-cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128  # faster, and good enough for this toy dataset
+cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.8
+cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1
 cfg.INPUT.MAX_SIZE_TEST = 2000
 cfg.MODEL.DEVICE = 'cuda:0'

@@ -6,7 +6,7 @@ In the process of urban governance, there appearing such scenes occasionally:
 - whether **trash & fallen leaves** on the road is swept.<sup>4</sup>
 - whether **blot** that scatter from the truck et. clotting on the road.<sup>5</sup> [TODO]
  
-The tasked and API mapping as follow:  
+The taskes and API mapping as follow:  
 - For 1, API is **predict_can & predict_ctrashc**
 - For 2, API is **predict**
 - For 3, API is **predict_smpfw**

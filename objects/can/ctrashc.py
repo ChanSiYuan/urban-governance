@@ -24,10 +24,9 @@ cfg.merge_from_file(model_zoo.get_config_file("COCO-Detection/faster_rcnn_R_50_F
 cfg.DATALOADER.NUM_WORKERS = 2
 
 cfg.MODEL.WEIGHTS = os.path.join("/home/disk/checkpoints", "ctrashc_v21.pth")
-cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7  # set the testing threshold for this model
-cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512  # faster, and good enough for this toy dataset
+cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7
+cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = 3
-cfg.MODEL.RETINANET.BBOX_REG_LOSS_TYPE = "smooth_l1"
 
 # cfg.INPUT.MAX_SIZE_TEST = 2000
 # cfg.INPUT.MIN_SIZE_TEST = 512
