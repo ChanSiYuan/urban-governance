@@ -4,7 +4,7 @@ import cv2
 
 from detectron2.utils.logger import setup_logger
 from detectron2.config import get_cfg
-
+from detectron2 import model_zoo
 from utils.predictor import VisualizationDemo
 
 setup_logger()
@@ -18,8 +18,8 @@ important_params = dict({
 })
 
 cfg = get_cfg()
-cfg.merge_from_file("./configs/COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml")
-cfg.MODEL.WEIGHTS = os.path.join("../../weights", important_params["model_weight"])
+cfg.merge_from_file(model_zoo.get_config_file("COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml"))
+cfg.MODEL.WEIGHTS = os.path.join("weights", important_params["model_weight"])
 cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = important_params["score_thresh"]
 cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128
 cfg.INPUT.MAX_SIZE_TEST = important_params["max_size"]
