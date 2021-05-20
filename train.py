@@ -4,7 +4,8 @@ import sys
 import glob
 import xml.etree.ElementTree as ElementTree
 import argparse
-
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 from detectron2.structures import BoxMode
 from detectron2.engine import DefaultTrainer
@@ -15,15 +16,6 @@ from detectron2.utils.visualizer import Visualizer
 from detectron2.data import MetadataCatalog, DatasetCatalog, build_detection_test_loader
 from detectron2.evaluation import COCOEvaluator, inference_on_dataset, DatasetEvaluators
 
-# label change
-# label_map = {
-#     "fixed": 0,
-#     "mobile": 1,
-#     "bag": 2
-
-    # "leaf": 0,
-    # "paper": 1
-# }
 
 label_zoo = dict({
     "strashc": dict({
@@ -40,10 +32,12 @@ label_zoo = dict({
         "paper": 1
     }),
     "truck": dict({
-
+        "truck": 0,
+        "other": 1,
+        "dirty": 2
     }),
     "flotage": dict({
-
+        "smfpw": 0
     }),
     "blot": dict({
         "blot": 0
@@ -137,8 +131,7 @@ def setup_cfg(args):
     cfg.DATASETS.TRAIN = ("cur_train",)
     cfg.DATASETS.TEST = ("cur_val",)
     cfg.DATALOADER.NUM_WORKERS = 2
-    cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(
-        "COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml")
+    cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml")
     cfg.SOLVER.IMS_PER_BATCH = 6
     cfg.SOLVER.BASE_LR = 0.00025
     cfg.SOLVER.MAX_ITER = 4000

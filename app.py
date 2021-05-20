@@ -47,7 +47,9 @@ def predict_ctrashc():
 def predict_can():
     """
     The api for street trash can detection task;
-    Detect objects contain: fixed trash can
+    Detect objects contain: mobile trash can (label: mobile)
+                            fixed trash can (label: fixed)
+                            trash bag (label: bag)
     """
     if request.method == 'POST':
         time_start = time.time()
@@ -70,9 +72,10 @@ def predict_can():
 @app.route('/predict', methods=['POST'])
 def predict():
     """
-    The api for street truck detection task, and recognize whether the truck clean or not;
-    Detect object contain: truck
-    :return:
+    The api for street truck detection task, and recognize whether the truck is clean or not;
+    Detect object contain: truck (label: truck)
+                           other car (label: other)
+                           dirty on truck (label: dirty)
     """
     if request.method == 'POST':
         time_start = time.time()
@@ -96,8 +99,7 @@ def predict():
 def predict_smpfw():
     """
     The api for flotages detection that flowing on the river.
-    Dtection object contain: flotage
-    :return:
+    Dtection object contain: flotage (label: smfpw)
     """
     if request.method == 'POST':
         time_start = time.time()
@@ -107,9 +109,8 @@ def predict_smpfw():
         _cls, _x0, _y0, _x1, _y1, = preds
         time_end = time.time()
         curr_time = time.strftime(time_fmt, time.localtime())
-        print(f"[{curr_time}] inference [smpfw] time cost: {time_end - time_start:2f} s")
+        print(f"[{curr_time}] inference [flotage] time cost: {time_end - time_start:2f} s")
         return jsonify({
-            'cls': _cls,
             'x0': _x0,
             'y0': _y0,
             'x1': _x1,
@@ -121,8 +122,8 @@ def predict_smpfw():
 def predict_trash():
     """
     The api for trash detection that heap up on the road.
-    Detection objects contain: trash and fallen leaves
-    :return:
+    Detection objects contain: fallen leaves (label: leaf)
+                               other trash (label: paper)
     """
     if request.method == 'POST':
         time_start = time.time()
@@ -146,8 +147,7 @@ def predict_trash():
 def predict_blot():
     """
     The api for blot detection that mud drop from truck on the road.
-    Detection objects contain: blot
-    :return:
+    Detection objects contain: blot (label: blot)
     """
     if request.method == "POST":
         time_start = time.time()
@@ -159,7 +159,6 @@ def predict_blot():
         curr_time = time.strftime(time_fmt, time.localtime())
         print(f"[{curr_time}] inference [blot] time cost: {time_end - time_start:2f} s")
         return jsonify({
-            "cls": _cls,
             "x0": _x0,
             "y0": _y0,
             "x1": _x1,

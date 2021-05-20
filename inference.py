@@ -4,6 +4,8 @@ import glob
 import sys
 import xml.etree.ElementTree as ElementTree
 import argparse
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 from detectron2.data import DatasetCatalog, MetadataCatalog
 from detectron2.structures import BoxMode
@@ -34,10 +36,12 @@ label_zoo = dict({
         "paper": 1
     }),
     "truck": dict({
-
+        "truck": 0,
+        "other": 1,
+        "dirty": 2
     }),
     "flotage": dict({
-
+        "smfpw": 0
     }),
     "blot": dict({
         "blot": 0

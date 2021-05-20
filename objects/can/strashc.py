@@ -17,7 +17,7 @@ setup_logger()
 
 cfg = get_cfg()
 cfg.merge_from_file("./configs/COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml")
-cfg.MODEL.WEIGHTS = os.path.join("/home/disk/checkpoints", "strashc_v20.pth")
+cfg.MODEL.WEIGHTS = os.path.join("../../weights", "strashc_v10.pth")
 cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5
 cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = 3

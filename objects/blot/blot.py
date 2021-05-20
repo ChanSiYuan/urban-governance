@@ -10,7 +10,7 @@ from utils.predictor import VisualizationDemo
 setup_logger()
 
 important_params = dict({
-    "model_weight": "blot_v1.pth",
+    "model_weight": "blot_v10.pth",
     "score_thresh": 0.4,
     "device_GPUid": "cuda:0",
     "max_size": 512,
@@ -19,7 +19,7 @@ important_params = dict({
 
 cfg = get_cfg()
 cfg.merge_from_file("./configs/COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml")
-cfg.MODEL.WEIGHTS = os.path.join("/home/disk/checkpoints", important_params["model_weight"])
+cfg.MODEL.WEIGHTS = os.path.join("../../weights", important_params["model_weight"])
 cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = important_params["score_thresh"]
 cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128
 cfg.INPUT.MAX_SIZE_TEST = important_params["max_size"]
