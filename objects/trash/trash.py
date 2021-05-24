@@ -16,7 +16,7 @@ cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7
 cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = 2
 cfg.INPUT.MAX_SIZE_TEST = 512
-cfg.MODEL.DEVICE = 'cuda:2'
+cfg.MODEL.DEVICE = 'cuda:0'
 
 predictor = VisualizationDemo(cfg)
 

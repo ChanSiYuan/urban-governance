@@ -134,3 +134,4 @@ dmypy.json
 
 # Model weights
 /weights
+/test

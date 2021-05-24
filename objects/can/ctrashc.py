@@ -23,7 +23,7 @@ cfg.merge_from_file(model_zoo.get_config_file("COCO-Detection/faster_rcnn_R_50_F
 
 cfg.DATALOADER.NUM_WORKERS = 2
 
-cfg.MODEL.WEIGHTS = os.path.join("../../weights", "ctrashc_v10.pth")
+cfg.MODEL.WEIGHTS = os.path.join("weights", "ctrashc_v10.pth")
 cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7
 cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = 3
@@ -36,7 +36,7 @@ cfg.SOLVER.IMS_PER_BATCH = 2
 cfg.SOLVER.MAX_ITER = 3000
 # cfg.SOLVER.AMP.ENABLED = False
 
-cfg.MODEL.DEVICE = 'cuda:2'
+cfg.MODEL.DEVICE = 'cuda:0'
 
 predictor = VisualizationDemo(cfg)
 # predictor = DefaultPredictor(cfg)

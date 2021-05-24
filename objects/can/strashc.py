@@ -23,7 +23,7 @@ cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = 3
 # cfg.INPUT.MAX_SIZE_TEST = 2000
 # cfg.INPUT.MIN_SIZE_TEST = 512
-cfg.MODEL.DEVICE = 'cuda:2'
+cfg.MODEL.DEVICE = 'cuda:0'
 
 
 predictor = VisualizationDemo(cfg)

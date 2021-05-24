@@ -39,7 +39,7 @@ def check_truck_neat(truck_area, dirty_boxes):
 
 def get_prediction_truck(image_bytes):
     im = transform_image(image_bytes=image_bytes)
-    h, w, _ = im.shape()
+    h, w, _ = im.shape
 
     outputs, vis_outputs = predictor.run_on_image(im)
     pred_classes = outputs["instances"]._fields['pred_classes'].to("cpu").tolist()
