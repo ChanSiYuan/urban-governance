@@ -48,7 +48,7 @@ label_zoo = dict({
     })
 })
 
-data_dir = '/home/csy/data/cszz/can/ctrashc'
+# data_dir = '/home/csy/data/cszz/can/ctrashc'
 
 
 def get_parser():
