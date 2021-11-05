@@ -131,6 +131,7 @@ dmypy.json
 # IDE setting
 .vscode
 .idea
+/venv
 
 # Model weights
 /weights
